@@ -3,15 +3,15 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-
 	<title>Pantalla principal</title>
+	<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
 </h:head>
 <h:body>
 
     Bienvenido a la Pantalla Principal
     
     
-    <h:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}">
+    <h:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}" headerClass="headerTable" rowClasses="rowTable rowTableLine" >
 		<h:column>
 		
 			<f:facet name="header">Nombre</f:facet>
@@ -44,7 +44,7 @@
 		
 			<f:facet name="header">Estatus</f:facet>
 			<h:outputText value="HABILITADO" rendered="#{empleado.estatus}"></h:outputText>
-			<h:outputText value="INHABILITADO" rendered="#{empleado.estatus}"></h:outputText>
+			<h:outputText value="INHABILITADO" rendered="#{!empleado.estatus}"></h:outputText>
 
 		</h:column>
 
