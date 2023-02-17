@@ -7,8 +7,11 @@ import java.io.IOException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+
+import com.buenmaestro.project.dto.UsuarioDTO;
 
 /**
  * @author Eliezer Clase que nos permite controlar el funcionamiento de la
@@ -28,6 +31,12 @@ public class LoginController {
 	 * Contrsaeña ingresada en el login
 	 */
 	private String password;
+	/**
+	 * Bean que mantiene la informacion en sesion
+	 */
+	@ManagedProperty("#{sessionController}")
+	private SessionController sessionController;
+	
 
 	public void ingresar() {
 		System.out.println("Usuario: " + usuario);
@@ -36,6 +45,12 @@ public class LoginController {
 			/*FacesContext.getCurrentInstance().addMessage("formLogin: txtUsuario",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario correcto", ""));*/
 			try {
+				UsuarioDTO usuarioDTO = new UsuarioDTO();
+				usuarioDTO.setUsuario(this.usuario);
+				usuarioDTO.setPassword(this.password);
+				
+				
+				this.sessionController.setUsuarioDTO(usuarioDTO);
 				this.redireccionar("principal.xhtml");
 			} catch (IOException e) {
 				FacesContext.getCurrentInstance().addMessage("formLogin: txtUsuario",
@@ -81,6 +96,20 @@ public class LoginController {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	/**
+	 * @return the sessionController
+	 */
+	public SessionController getSessionController() {
+		return sessionController;
+	}
+
+	/**
+	 * @param sessionController the sessionController to set
+	 */
+	public void setSessionController(SessionController sessionController) {
+		this.sessionController = sessionController;
 	}
 
 }
